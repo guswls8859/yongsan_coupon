@@ -201,3 +201,51 @@ def phone_num_ch(request):
     df.to_excel(output_path, index=False)
 
     return HttpResponse(f'번호 변경 및 엑셀 저장 완료! → {output_path}')
+
+
+def data_upload(request):
+    # ✅ 엑셀 파일 경로 (경로는 필요에 따라 수정 가능)
+    excel_file_path = 'static/coupons.xlsx'
+
+    # ✅ 엑셀 파일 읽기
+    df = pd.read_excel(excel_file_path)
+
+    # ✅ DataFrame 확인 (컬럼명 출력)
+    print(df.columns)
+
+    # ✅ 컬럼명이 아래와 같다고 가정
+    # phone_number / number / activate
+
+    insert_count = 0
+    update_count = 0
+
+    for index, row in df.iterrows():
+        phone_number = row['phone_number']
+        number = row['number']
+        activate = row['activate']
+
+        # ✅ 이미 number(고유번호)가 DB 에 있으면 update
+        coopon, created = Coopon.objects.update_or_create(
+            number=number,  # 기준 필드
+            defaults={
+                'phone_number': phone_number,
+                'activate': activate
+            }
+        )
+
+        if created:
+            insert_count += 1
+            print(f'Inserted: {number} / {phone_number}')
+        else:
+            update_count += 1
+            print(f'Updated: {number} / {phone_number}')
+
+    return HttpResponse(f'엑셀 → DB 저장 완료! (신규 {insert_count}개, 업데이트 {update_count}개)')
+
+
+def test_data_set(request):
+    # NMik88
+    coopon = Coopon.objects.get(phone_number='010-4168-9819')
+    coopon.activate = False
+    coopon.save()
+    return HttpResponse('업로드 완료')

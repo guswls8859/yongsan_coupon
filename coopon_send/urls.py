@@ -24,10 +24,12 @@ urlpatterns = [
     path('', main_view.main_page, name='main_page'),
     # path('clear', main_view.clean_phone_numbers, name='clean_phone_numbers'),
     # path('wndqhrghkrdls', main_view.wndqhrghkrdls, name='wndqhrghkrdls'),
+    # path('data_upload', main_view.data_upload, name='excel_make'),
     # path('excel_make', main_view.excel_make, name='excel_make'),
     # path('generate_unique_numbers', main_view.generate_unique_numbers, name='generate_unique_numbers'),
     # path('ch_phone', main_view.phone_num_ch, name='clean_phone_numbers'),
     path('coopon/<str:coopon_id>', main_view.coopon, name='coopon'),
+    # path('test_data_set', main_view.test_data_set, name='test_data_set'),
     path('coopon_use/<str:coopon_id>', main_view.coopon_use, name='coopon_use'),
 ]
 if settings.DEBUG:
