@@ -21,7 +21,7 @@ from django.urls import path
 from main_content import views as main_view
 
 urlpatterns = [
-    # path('', main_view.main_page, name='main_page'),
+    path('', main_view.main_page, name='main_page'),
     # path('clear', main_view.clean_phone_numbers, name='clean_phone_numbers'),
     # path('wndqhrghkrdls', main_view.wndqhrghkrdls, name='wndqhrghkrdls'),
     # path('excel_make', main_view.excel_make, name='excel_make'),
