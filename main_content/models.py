@@ -1,0 +1,11 @@
+from django.db import models
+
+# Create your models here.
+
+class Coopon(models.Model):
+    phone_number = models.CharField(max_length=300, null=True, unique=True)
+    number = models.CharField(max_length=100,default=0, unique=True)
+    activate = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.number
