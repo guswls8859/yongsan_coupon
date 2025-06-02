@@ -83,16 +83,27 @@ WSGI_APPLICATION = 'coopon_send.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'coopon_test',                      # Or path to database file if using sqlite3.
-        'USER': 'postgres',                      # Not used with sqlite3.
-        'PASSWORD': '1235gg',                  # Not used with sqlite3.
-        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',
+        'NAME': 'sms_send',                      # Or path to database file if using sqlite3.
+        'USER': 'root',                      # Not used with sqlite3.
+        'PASSWORD': 'admin1234',                  # Not used with sqlite3.
+        'HOST': 'svc.sel4.cloudtype.app',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '32027',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#         'NAME': 'coopon_test',                      # Or path to database file if using sqlite3.
+#         'USER': 'postgres',                      # Not used with sqlite3.
+#         'PASSWORD': '1235gg',                  # Not used with sqlite3.
+#         'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
+#         'PORT': '5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
