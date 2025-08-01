@@ -4,8 +4,8 @@
     justify-content: center; /* 가로 정렬 */
     align-items: center;
 }
-body{
-    height: auto;
+.button-area{
+    margin-top: 20px;
 }
 /* 공통: 모든 img 에 적용 */
 img {
