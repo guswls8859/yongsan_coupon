@@ -4,6 +4,9 @@
     justify-content: center; /* 가로 정렬 */
     align-items: center;
 }
+body{
+    height: auto;
+}
 /* 공통: 모든 img 에 적용 */
 img {
     max-width: 100%;
@@ -19,6 +22,10 @@ img {
 
 #main_content {
     max-width: 100%;
+    margin: 0 auto;
+}
+#main_cool_content {
+    max-width: 80%;
     margin: 0 auto;
 }
 
@@ -45,6 +52,12 @@ img {
     border: 1px solid pink;
     border-radius: 45px;
     background-color: pink;
+    font-weight: bold;
+}
+#sub_btn_cool{
+    border: 1px solid #fcdd00;
+    border-radius: 45px;
+    background-color: #fcdd00;
     font-weight: bold;
 }
 #coupon_form label {

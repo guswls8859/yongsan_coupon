@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render, HttpResponse
 from main_content.models import *
 from django.http import JsonResponse
@@ -14,12 +16,19 @@ def main_page(request):
     content = {}
     return render(request, 'index.html', content)
 
+def icool_page(request):
+    content = {}
+    return render(request, 'icool_index.html', content)
 
 def coopon(request, coopon_id):
     coopon_content = Coopon.objects.get(number=coopon_id)
     content = {'coopon': coopon_content}
     return render(request, 'main.html', content)
 
+def coopon_icool(request, coopon_id):
+    coopon_content = Coopon_icool.objects.get(number=coopon_id)
+    content = {'coopon': coopon_content}
+    return render(request, 'icool_main.html', content)
 
 @csrf_exempt  # 개발 중일 경우. 운영 환경에선 CSRF 설정 필요.
 def coopon_use(request, coopon_id):
@@ -35,14 +44,29 @@ def coopon_use(request, coopon_id):
         return JsonResponse({'success': False, 'message': 'POST 요청만 허용됩니다.'}, status=405)
 
 
+@csrf_exempt  # 개발 중일 경우. 운영 환경에선 CSRF 설정 필요.
+def coopon_icool_use(request, coopon_id):
+    if request.method == 'POST':
+        try:
+            coopon = Coopon_icool.objects.get(number=coopon_id)
+            coopon.activate = True
+            coopon.usetime = datetime.datetime.now()
+            coopon.save()
+            return JsonResponse({'success': True, 'message': f'{coopon_id}번 쿠폰이 활성화되었습니다.'})
+        except Coopon.DoesNotExist:
+            return JsonResponse({'success': False, 'message': '해당 쿠폰을 찾을 수 없습니다.'}, status=404)
+    else:
+        return JsonResponse({'success': False, 'message': 'POST 요청만 허용됩니다.'}, status=405)
+
+
 # 6자리 숫자 난수 생성 함수
-def generate_random_code(length=6):
+def generate_random_code(length=8):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choices(characters, k=length))
 
 def generate_unique_numbers(request):
     # 엑셀 파일 경로
-    excel_file_path = 'static/쿠폰지급자 정보.xlsx'
+    excel_file_path = 'static/coo_phone_data.xlsx'
 
     # 엑셀 파일 읽기
     df = pd.read_excel(excel_file_path)
@@ -51,7 +75,7 @@ def generate_unique_numbers(request):
     a_column_values = df.iloc[1:, 0].tolist()
 
     # 1️⃣ 현재 DB에 있는 number(코드) 다 가져오기 → 중복 방지
-    existing_codes = set(Coopon.objects.values_list('number', flat=True))
+    existing_codes = set(Coopon_icool.objects.values_list('number', flat=True))
 
     # 2️⃣ 새로운 코드들도 여기 저장해서 중복 방지
     new_codes = set()
@@ -69,10 +93,11 @@ def generate_unique_numbers(request):
                 break  # 중복 없으면 탈출
 
         # DB 저장
-        Coopon.objects.create(
-            phone_number=phone,
+        Coopon_icool.objects.create(
+            phone=phone,
             number=random_code,
-            activate=False
+            activate=False,
+            edittime=datetime.datetime.now()
         )
 
         # 사용한 코드 set 에 추가
@@ -149,19 +174,25 @@ def wndqhrghkrdls(request):
     return HttpResponse(f'중복 phone_number 정리 완료! 삭제된 row 수: {delete_count}개')
 
 def excel_make(request):
-    # ✅ Coopon 테이블 모든 데이터 조회
-    coopon_data = Coopon.objects.all().values('phone_number', 'number', 'activate')
+    from django.utils.timezone import is_aware
 
-    # ✅ DataFrame 으로 변환
-    df = pd.DataFrame(list(coopon_data))
+    # 데이터 가져오기
+    qs = Coopon_icool.objects.all().values()
 
-    # ✅ 엑셀 파일 저장 경로
-    output_path = 'static/coupons.xlsx'
+    # datetime 필드에서 tz 제거
+    cleaned_data = []
+    for item in qs:
+        for field in ['edittime', 'usetime']:
+            dt = item.get(field)
+            if dt and is_aware(dt):
+                item[field] = dt.replace(tzinfo=None)
+        cleaned_data.append(item)
 
-    # ✅ 엑셀 저장
-    df.to_excel(output_path, index=False)
+    # DataFrame 생성 후 엑셀로 저장
+    df = pd.DataFrame(cleaned_data)
+    df.to_excel('coopon_icool_export.xlsx', index=False)
 
-    return HttpResponse(f'엑셀 저장 완료! → {output_path}')
+    return HttpResponse(f'엑셀 저장 완료! →')
 
 def phone_num_ch(request):
     coo = Coopon.objects.all()
@@ -249,3 +280,14 @@ def test_data_set(request):
     coopon.activate = False
     coopon.save()
     return HttpResponse('업로드 완료')
+
+
+def use_data(request):
+    coupon = Coopon.objects.filter(activate=True).order_by('id')
+    for test in coupon:
+        print(test.phone_number)
+    return HttpResponse(coupon)
+
+def sms_sends(request):
+    data = {}
+    return render()

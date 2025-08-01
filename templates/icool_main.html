@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="{% static 'js/main_cool.js' %}"></script>
+    <script>
+        document.cookie = "csrftoken={{ csrf_token }}; path=/";
+    </script>
+    <title>용산어린이정원 만족도 조사 리워드</title>
+</head>
+<body>
+<div class="coopon_area">
+    <div class="logo_area">
+        <img id="logo_icon" src="{% static 'img/logo.png' %}">
+    </div>
+    <div class="main_content">
+        <img id="main_content" src="{% static 'img/icool.png' %}">
+    </div>
+    <div class="button-area">
+        {% if coopon.activate == False %}
+            <img id="button_content" src="{% static 'img/button03.png' %}">
+            <img id="button_content2" src="{% static 'img/button02.png' %}">
+        {% elif coopon.activate == True %}
+            <img id="button_content3" src="{% static 'img/button02.png' %}">
+        {% endif %}
+        <input id="coo_num" type="hidden" value="{{ coopon.number }}">
+    </div>
+</div>
+</body>
+</html>

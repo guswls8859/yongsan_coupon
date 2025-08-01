@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 번호 입력</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+
+    </script>
+</head>
+<body>
+
+<div class="coo_inp_div">
+    <!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 번호 입력</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+
+    </script>
+</head>
+<body>
+
+<div class="coo_inp_div">
+    <h2>SMS 발송 페이지</h2>
+
+    <form id="smsForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="excelFile">엑셀 파일 업로드:</label>
+            <input type="file" id="excelFile" name="excelFile" accept=".xls,.xlsx">
+        </div>
+
+        <div>
+            <label for="smsTitle">문자 제목:</label>
+            <input type="text" id="smsTitle" name="smsTitle" placeholder="제목을 입력하세요">
+        </div>
+
+        <div>
+            <label for="smsContent">문자 내용:</label>
+            <textarea id="smsContent" name="smsContent" rows="5" placeholder="문자 내용을 입력하세요"></textarea>
+        </div>
+
+        <div>
+            <button type="submit">문자 보내기</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+</div>
+</body>
+</html>
