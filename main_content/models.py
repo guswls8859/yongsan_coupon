@@ -19,4 +19,4 @@ class Coopon_icool(models.Model):
     usetime = models.DateTimeField(null=True)
 
     def __str__(self):
-        return self.pk
+        return self.number
