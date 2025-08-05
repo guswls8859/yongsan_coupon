@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 번호 입력</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+    </script>
+</head>
+<body>
+
+<div style="display: flex; flex-direction: column">
+
+    <div style="display: flex">
+    <table style="border: 1px solid black">
+           {% for item in data %}
+        <tr>
+            <td>난수</td>
+            <td>{{ item.number }}</td>
+            <td>번호</td>
+            <td>{{ item.phone }}</td>
+            <td>사용일자</td>
+            <td>{{ item.usetime }}</td>
+            <td>사용여부</td>
+            <td>{{ item.activate }}</td>
+        </tr>
+            {% endfor %}
+    </table>
+    </div>
+
+</div>
+</body>
+</html>

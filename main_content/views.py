@@ -20,15 +20,31 @@ def icool_page(request):
     content = {}
     return render(request, 'icool_index.html', content)
 
+
+def icool_use_data(request):
+    cou = Coopon_icool.objects.all().order_by('usetime')
+    data = {'data': cou}
+
+    return render(request, 'icool_use.html', data)
+
 def coopon(request, coopon_id):
     coopon_content = Coopon.objects.get(number=coopon_id)
     content = {'coopon': coopon_content}
     return render(request, 'main.html', content)
 
 def coopon_icool(request, coopon_id):
-    coopon_content = Coopon_icool.objects.get(number=coopon_id)
-    content = {'coopon': coopon_content}
-    return render(request, 'icool_main.html', content)
+    try:
+        coopon_content = Coopon_icool.objects.get(number=coopon_id)
+        content = {'coopon': coopon_content}
+        return render(request, 'icool_main.html', content)
+    except Coopon_icool.DoesNotExist:
+        return HttpResponse("""
+                    <script>
+                        alert('쿠폰 번호를 다시 확인해 주세요');
+                        history.back();
+                    </script>
+                """)
+
 
 @csrf_exempt  # 개발 중일 경우. 운영 환경에선 CSRF 설정 필요.
 def coopon_use(request, coopon_id):

@@ -23,6 +23,7 @@ from main_content import views as main_view
 urlpatterns = [
     path('', main_view.main_page, name='main_page'),
     path('icool', main_view.icool_page, name='icool_page'),
+    # path('icool_use_data', main_view.icool_use_data, name='icool_use_data'),
 
     # path('clear', main_view.clean_phone_numbers, name='clean_phone_numbers'),
     # path('wndqhrghkrdls', main_view.wndqhrghkrdls, name='wndqhrghkrdls'),
