@@ -28,9 +28,17 @@ def icool_use_data(request):
     return render(request, 'icool_use.html', data)
 
 def coopon(request, coopon_id):
-    coopon_content = Coopon.objects.get(number=coopon_id)
-    content = {'coopon': coopon_content}
-    return render(request, 'main.html', content)
+    try:
+        coopon_content = Coopon.objects.get(number=coopon_id)
+        content = {'coopon': coopon_content}
+        return render(request, 'main.html', content)
+    except Coopon.DoesNotExist:
+        return HttpResponse("""
+                            <script>
+                                alert('쿠폰 번호를 다시 확인해 주세요');
+                                history.back();
+                            </script>
+                        """)
 
 def coopon_icool(request, coopon_id):
     try:
